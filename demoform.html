@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="demoform.css">
+</head>
+
+<body>
+
+  <body>
+    <div id="form_container">
+      <h2 id="title">Form</h2>
+      <form id="myform" name="my-form" method="POST">
+        
+        <input id="fname" type="text" name="Fname" placeholder="first name" required>
+        <p id="p1" class="valid"></p>
+
+        <input id="lname" type="text" name="Lname" placeholder="last name">
+        <p id="p2"></p>
+
+        
+        <input id="email" type="email" name="Email" placeholder="email">
+        <p id="p3"></p>
+
+        
+        <input id="phone" type="tel" name="Phone" placeholder="Mobile no">
+        <p id="p4"></p>
+
+         <select name="state" id="countySel" size="1">
+          <option value="" selected="selected">Select Country</option>
+        </select>
+        <br>
+        <br>
+      
+        <select name="countrya" id="stateSel" size="1">
+          <option value="" selected="selected">Please select Country first</option>
+        </select>
+        <br>
+        <br>
+        
+
+        <select name="district" id="citySel" size="1">
+          <span id="f8" class="error"></span><br>
+          <option value="" selected="selected" class="opt">Please select State first</option>
+        </select><br>
+      
+      
+
+        <button type="submit" onclick="submitform();return false">
+          <span>submit <i class="fa fa-bolt"></i></span>
+        </button>
+      </form>
+    </div>
+  </body>
+  <script type="text/javascript" src="demoform.js"></script>
+</body>
+
+</html>

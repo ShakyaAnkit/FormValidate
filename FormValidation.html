@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form Validation</title>
+    <link rel="stylesheet" href="Form-Validation.css">
+</head>
+<body>
+    <div id="form_container">
+        <h2 id="title">Form</h2>
+        <form id="myform" name="my-form" method="POST">
+          <label for="fname">first name:</label>
+          <input id="fname" type="text" name="Fname" placeholder="first name" required>
+          <p id="fname_error_message" class="error_form"></p>
+  
+          <label for="lname">last name:</label>
+          <input id="lname" type="text" name="Lname" placeholder="last name">
+          <p id="lname_error_message" class="error_form"></p>
+            
+          <label for="email">email:</label>
+          <input id="email" type="email" name="Email" placeholder="email">
+          <p id="email_error_message" class="error_form"></p>
+  
+          <label for="phoneno">Mobile no</label>
+          <input id="phone" type="tel" name="Phone" placeholder="Mobile no">
+          <p id="phone_error_message" class="error_form"></p>
+          <br>
+          <br>
+            
+          <select name="country" id="country" class="form-control input-lg">
+                <option value="">Select country</option>
+               </select>
+               <br>
+               <br>
+               <select name="state" id="state" class="form-control input-lg">
+                <option value="">Select state</option>
+               </select>
+               <br>
+               <br>
+               <select name="city" id="city" class="form-control input-lg">
+                <option value="">Select city</option>
+               </select>
+          
+          <button type="submit" onclick="submitform();return false">
+            <span>submit <i class="fa fa-bolt"></i></span>
+          </button>
+        </form>
+      </div>
+      <script src="jquery-1.12.4.min.js"></script>
+      <script src="jquery.tmpl.js"></script>
+      <script>
+          $(function(){
+                $("#fname_error_message").hide();
+                $("#lname_error_message").hide();
+                $("#email_error_message").hide();
+                $("#phone_error_message").hide();
+               
+                var error_fname = false;
+                var error_lname = false;
+                var error_email = false;
+                var error_phone = false;
+
+                $("#fname").focusout(function(){
+                    check_fname();
+                });
+                $("#lname").focusout(function(){
+                    check_lname();
+                });
+
+                $("#email").focusout(function(){
+                    check_email();
+                });
+                $("#phone").focusout(function(){
+                    check_phone();
+                });
+
+                $("select").focusout(function(){
+                    if (this.value == ""){
+                        $(this).css("border-color","#e74c3c")
+                    }
+                    else{
+                        $(this).css("border-color","#2ecc71")
+                    }
+                    // check_select();
+                })
+                function check_fname() {
+                    var pattern = /^[a-zA-z]*$/;
+                    var fname = $("#fname").val();
+                    if(pattern.test(fname)&& fname !==""){
+                        $("#fname_error_message").hide();
+                        $("#fname").css("border-color","#2ecc71");
+                    }else{
+                        $("#fname_error_message").html("Please fill the field correctly");
+                        $("#fname_error_message").show();
+                        $("#fname").css("border-color","#e74c3c")
+                    }
+                }
+
+                function check_lname() {
+                    var pattern = /^[a-zA-z]*$/;
+                    var fname = $("#lname").val();
+                    if(pattern.test(fname)&& fname !==""){
+                        $("#lname_error_message").hide();
+                        $("#lname").css("border-color","#2ecc71");
+                    }else{
+                        $("#lname_error_message").html("Please fill the field correctly");
+                        $("#lname_error_message").show();
+                        $("#lname").css("border-color","#e74c3c")
+                    }
+                }
+
+                function check_email() {
+                    var pattern = /^([a-z\d\.\-]+)@([a-z\-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
+                    var fname = $("#email").val();
+                    if(pattern.test(fname)&& fname !==""){
+                        $("#email_error_message").hide();
+                        $("#email").css("border-color","#2ecc71");
+                    }else{
+                        $("#email_error_message").html("Please enter a valid email address");
+                        $("#email_error_message").show();
+                        $("#email").css("border-color","#e74c3c")
+                    }
+                }
+
+                function check_phone() {
+                    var pattern = /^\d{10}$/;
+                    var fname = $("#phone").val();
+                    if(pattern.test(fname)&& fname !==""){
+                        $("#phone_error_message").hide();
+                        $("#phone").css("border-color","#2ecc71");
+                    }else{
+                        $("#phone_error_message").html("Please enter a valid mobile number");
+                        $("#phone_error_message").show();
+                        $("#phone").css("border-color","#e74c3c")
+                    }
+                }     
+          });
+          function submitform(){
+              console.log($("#country").val())
+                    if ($("#fname").val()!==""&&$("#lname").val()!==""&&$("#email").val()!==""&&$("#phone").val()!==""&&$("#country").val()!==""&&$("#state").val()!==""&&$("#city").val()!==""){
+                        console.log("Name: "+$("#fname").val()+" "+$("#lname").val());
+                        console.log("Email: "+$("#email").val())
+                        console.log("Phone: "+$("#phone").val())
+                        console.log("Address: "+$("#country").val()+","+$("#state").val()+","+$("#city").val()  );
+                    }
+                    
+                }
+
+                load_json_data('country');
+    function load_json_data(name, parent_id)
+     {
+      var html_code = '';
+      $.getJSON('country_state_city.json', function(data){
+       html_code += '<option value="">Select '+name+'</option>';
+       $.each(data, function(key, value){
+        if(name== 'country')
+        {
+         if(value.parent_id == '0')
+         {
+          html_code += '<option value="'+value.name+'">'+value.name+'</option>';
+         }
+        }
+        else
+        {
+         if(value.parent_id == parent_id)
+         {
+          html_code += '<option value="'+value.name+'">'+value.name+'</option>';
+         }
+        }   
+       });
+       $('#'+name).html(html_code);
+      });
+     }
+     $(document).on('change', '#country', function(){
+      var country_id = $(this).val();
+      if(country_id != '')
+      {
+       load_json_data('state', country_id);
+      }
+      else
+      {
+       $('#state').html('<option value="">Select state</option>');
+       $('#city').html('<option value="">Select city</option>');
+      }
+     });
+     $(document).on('change', '#state', function(){
+      var state_id = $(this).val();
+      if(state_id != '')
+      {
+       load_json_data('city', state_id);
+      }
+      else
+    {
+       $('#city').html('<option value="">Select city</option>');
+      }
+    });  
+      </script>
+      
+</body>
+</html>
